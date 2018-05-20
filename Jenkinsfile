@@ -9,13 +9,13 @@ pipeline {
     stage('Test') {
       steps {
         echo 'TEST'
-	sh 'docker run -d  --name app3 -id -p 80:80 app:latest'
+	sh 'docker run -d  --name app4 -id -p 80:80 app:latest'
 	sh '/bin/nc -vz localhost 80'
-	sh 'docker stop app3'
+	sh 'docker stop app4'
       }
       post{
         always {
-	 sh 'docker container stop app3'
+	 sh 'docker container stop app4'
 	}
       }
     }
