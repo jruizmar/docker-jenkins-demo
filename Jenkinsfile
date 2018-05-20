@@ -20,9 +20,11 @@ pipeline {
       }
     }
     stage('Push Registry'){
-      steps{
-        withCredentials([usernamePassword(credentialsId: 'f143dc07-01c7-4b5b-bd0b-b8b342cb40b8', passwordVariable: 'password', usernameVariable: 'user')]) {
-           sh 'docker tag app:test jruizmar/app:stable'
+      steps{     
+	withCredentials([usernamePassword(credentialsId: 'f143dc07-01c7-4b5b-bd0b-b8b342cb40b8', passwordVariable: 'password', usernameVariable: 'user')]) {
+           echo "PASSWORD: $password"
+           echo "USER: $user
+	   sh 'docker tag app:test jruizmar/app:stable'
 	   sh 'docker push jruizmar/app:stable'
 	 }
       }
