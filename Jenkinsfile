@@ -20,8 +20,8 @@ pipeline {
       }
     }
     stage('Push Registry'){
-      steps{     
-	withDockerRegistry([ credentialsId: (credentialsId: "f143dc07-01c7-4b5b-bd0b-b8b342cb40b8", url: "" ]) {
+      steps{ 
+	withDockerRegistry([ credentialsId: "f143dc07-01c7-4b5b-bd0b-b8b342cb40b8", url: "" ]) {
 	   sh 'docker tag app:latest jruizmar/app:stable'
 	   sh 'docker push jruizmar/app:stable'
 	 }
