@@ -15,15 +15,15 @@ pipeline {
       }
       post{
         always {
-	 sh 'docker container stop app'
+	 sh 'docker container stop app2'
 	}
       }
     }
     stage('Push Registry'){
       steps{     
 	withCredentials([usernamePassword(credentialsId: 'f143dc07-01c7-4b5b-bd0b-b8b342cb40b8', passwordVariable: 'password', usernameVariable: 'user')]) {
-	   sh 'docker tag app:latest jruizmar/app:stable'
-	   sh 'docker push jruizmar/app:stable'
+	   sh 'docker tag app:latest jruizmar/app2:stable'
+	   sh 'docker push jruizmar/app2:stable'
 	 }
       }
     }
