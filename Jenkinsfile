@@ -9,14 +9,22 @@ pipeline {
     stage('Test') {
       steps {
         echo 'TEST'
-	sh '/bin/nc -vz localhost 22'
-	sh '/bin/nc -vz localhost 8080'
+	sh 'docker run -d  --name app -id -p 80:80 app:test'
+	sh '/bin/nc -vz localhost 80'
+	sh 'docker stop app'
+      }
+      post{
+        always {
+	 sh 'docker container stop app'
+	}
       }
     }
-    stage('Deploy'){
+    stage('Push Registry'){
       steps{
-        sh 'docker tag app:test app:stable'
-	sh 'docker push jruizmar/app:stable'
+        withCredentials([usernamePassword(credentialsId: 'f143dc07-01c7-4b5b-bd0b-b8b342cb40b8', passwordVariable: 'password', usernameVariable: 'user')]) {
+           sh 'docker tag app:test jruizmar/app:stable'
+	   sh 'docker push jruizmar/app:stable'
+	 }
       }
     }
   }
